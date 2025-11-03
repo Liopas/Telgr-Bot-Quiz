@@ -1,0 +1,17 @@
+from aiogram import types
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+
+def generate_options_keyboard(answer_options, right_answer):
+    builder = InlineKeyboardBuilder()
+
+    for option in answer_options:
+        # В callback_data добавим и статус (правильный/нет), и сам текст ответа
+        status = "right_answer" if option == right_answer else "wrong_answer"
+        builder.add(types.InlineKeyboardButton(
+                text=option,
+                callback_data=f"{status}:{option}"
+            )
+        )
+
+    builder.adjust(1)
+    return builder.as_markup()
